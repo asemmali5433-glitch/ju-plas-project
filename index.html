@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Asem Ali Deeb Abuzaid</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     * {
       margin: 0;
@@ -12,198 +13,300 @@
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0f172a, #581c87);
-      color: white;
       min-height: 100vh;
       padding: 20px;
+      overflow-x: hidden;
+      position: relative;
     }
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(173, 216, 230, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(173, 216, 230, 0.1) 0%, transparent 20%),
+        linear-gradient(135deg, #0f0f1b, #1a1a2e);
+      z-index: -2;
+    }
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(173, 216, 230, 0.5);
+      animation: float 15s infinite ease-in-out;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: 
+          translateY(-100vh) 
+          translateX(calc(30vw * (var(--direction) - 0.5))) 
+          rotate(360deg);
+        opacity: 0;
+      }
+    }
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
     header {
       text-align: center;
-      padding: 40px 0;
+      padding: 50px 0 30px;
     }
     h1 {
-      font-size: 2.8rem;
-      background: linear-gradient(to right, #22d3ee, #c084fc);
+      font-size: 3.2rem;
+      background: linear-gradient(90deg, #00dbde, #fc00ff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
     }
     .subtitle {
-      font-size: 1.2rem;
-      color: #cbd5e1;
-      max-width: 600px;
+      font-size: 1.3rem;
+      color: #a0aec0;
+      max-width: 650px;
       margin: 0 auto;
+      line-height: 1.6;
     }
 
     .content {
       display: flex;
       flex-wrap: wrap;
-      gap: 30px;
-      margin: 30px 0;
+      gap: 32px;
+      margin: 30px 0 50px;
     }
 
     .info-card, .calc-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 25px;
+      background: rgba(20, 20, 40, 0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 32px;
       flex: 1;
-      min-width: 300px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      min-width: 320px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .info-card:hover, .calc-card:hover {
+      transform: translateY(-5px);
     }
 
     .card-title {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-      color: #e2e8f0;
+      font-size: 1.8rem;
+      margin-bottom: 24px;
+      background: linear-gradient(90deg, #00dbde, #fc00ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
     }
 
     .contact-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin: 12px 0;
+      gap: 16px;
+      margin: 16px 0;
       color: #cbd5e1;
+      font-size: 1.05rem;
     }
 
     .contact-icon {
-      width: 24px;
-      text-align: center;
-      color: #22d3ee;
+      width: 36px;
+      height: 36px;
+      background: rgba(0, 219, 222, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #00dbde;
+      font-size: 16px;
     }
 
     .skills {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 20px;
+      gap: 14px;
+      margin-top: 24px;
     }
 
     .skill {
-      background: rgba(34, 211, 238, 0.15);
-      padding: 10px;
-      border-radius: 10px;
+      background: rgba(0, 219, 222, 0.12);
+      padding: 12px;
+      border-radius: 12px;
       text-align: center;
-      color: #22d3ee;
-      font-weight: bold;
+      color: #00dbde;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .skill:hover {
+      background: rgba(0, 219, 222, 0.25);
     }
 
     .social-links {
       display: flex;
-      gap: 15px;
-      margin-top: 20px;
+      gap: 18px;
+      margin-top: 28px;
     }
 
     .social-link {
-      display: inline-block;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
       text-decoration: none;
       color: white;
-      font-weight: bold;
+      font-size: 20px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
-    /* --- آلة الحاسبة --- */
+    .social-link:hover {
+      background: linear-gradient(135deg, #00dbde, #fc00ff);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 219, 222, 0.4);
+    }
+
+    /* --- Calculator --- */
     .calculator {
-      background: #000;
-      border-radius: 15px;
-      padding: 20px;
-      margin-top: 10px;
+      background: #0d0d1a;
+      border-radius: 20px;
+      padding: 24px;
+      margin-top: 12px;
+      box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6), 0 4px 20px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(100, 100, 255, 0.15);
     }
 
     .display {
-      background: #1e293b;
-      color: white;
-      font-size: 2.2rem;
+      background: #111122;
+      color: #00ffea;
+      font-size: 2.4rem;
       text-align: right;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      font-family: monospace;
+      padding: 22px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      font-family: 'Courier New', monospace;
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
+      border: 1px solid #222244;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     }
 
     .buttons {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      gap: 14px;
     }
 
     .btn {
-      padding: 18px 0;
-      font-size: 1.3rem;
+      padding: 20px 0;
+      font-size: 1.4rem;
       border: none;
-      border-radius: 12px;
+      border-radius: 16px;
       cursor: pointer;
-      background: #334155;
+      background: #1e1e3a;
       color: white;
       font-weight: bold;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     .btn:hover {
-      opacity: 0.9;
-      transform: scale(1.03);
+      background: #2a2a4a;
+      transform: scale(1.04);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
     }
 
     .btn-operator {
-      background: #f59e0b;
+      background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+      color: white;
     }
 
     .btn-equals {
-      background: #10b981;
+      background: linear-gradient(135deg, #00c9ff, #92fe9d);
+      color: #0d0d1a;
       grid-row: span 2;
+      font-weight: 800;
     }
 
     .btn-clear {
-      background: #ef4444;
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
       grid-column: span 2;
+      color: white;
+    }
+
+    .btn-number {
+      background: #252545;
     }
 
     footer {
       text-align: center;
-      padding: 30px 0 10px;
-      color: #94a3b8;
-      font-size: 0.95rem;
+      padding: 20px 0 10px;
+      color: #64748b;
+      font-size: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
   </style>
 </head>
 <body>
+  <div class="particles" id="particles"></div>
+  
   <div class="container">
     <header>
       <h1>Asem Ali Deeb Abuzaid</h1>
-      <p class="subtitle">Full Stack Developer & Creative Technologist</p>
+      <p class="subtitle">Full Stack Developer | UI/UX Designer | Problem Solver</p>
     </header>
 
     <div class="content">
-      <!-- بطاقة المعلومات -->
+      <!-- Info Card -->
       <div class="info-card">
-        <h2 class="card-title">معلومات عني</h2>
+        <h2 class="card-title">About Me</h2>
         <div class="contact-item">
-          <span class="contact-icon">📧</span>
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
           <span>asemaliabuzaid@gmail.com</span>
         </div>
         <div class="contact-item">
-          <span class="contact-icon">📱</span>
-          <span>+96277 9 35 25 15</span>
+          <div class="contact-icon"><i class="fas fa-phone"></i></div>
+          <span>+962 779352515</span>
         </div>
         <div class="contact-item">
-          <span class="contact-icon">📍</span>
-          <span>Jordan, Amman</span>
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <span>Amman, Jordan</span>
         </div>
 
-        <h3 class="card-title" style="margin-top: 25px;">المهارات</h3>
+        <h3 class="card-title" style="margin-top: 28px; font-size: 1.5rem;">Technical Skills</h3>
         <div class="skills">
           <div class="skill">Web Development</div>
           <div class="skill">UI/UX Design</div>
@@ -211,39 +314,39 @@
           <div class="skill">Team Leadership</div>
         </div>
 
-        <h3 class="card-title" style="margin-top: 25px;">روابط التواصل</h3>
+        <h3 class="card-title" style="margin-top: 28px; font-size: 1.5rem;">Connect With Me</h3>
         <div class="social-links">
-          <a href="https://github.com" class="social-link" target="_blank">G</a>
-          <a href="https://www.linkedin.com/in/asem-abu-zaid-02a82b360/" class="social-link" target="_blank">L</a>
-          <a href="https://web.facebook.com/assemshab/" class="social-link" target="_blank">F</a>
+          <a href="https://github.com" class="social-link" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/asem-abu-zaid-02a82b360/" class="social-link" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://web.facebook.com/assemshab/" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
         </div>
       </div>
 
-      <!-- آلة الحاسبة -->
+      <!-- Calculator -->
       <div class="calc-card">
-        <h2 class="card-title">آلة حاسبة احترافية</h2>
+        <h2 class="card-title">Professional Calculator</h2>
         <div class="calculator">
           <div class="display" id="display">0</div>
           <div class="buttons">
             <button class="btn btn-clear" onclick="clearDisplay()">Clear</button>
-            <button class="btn btn-operator" onclick="appendOperator('/')">/</button>
+            <button class="btn btn-operator" onclick="appendOperator('/')">÷</button>
             <button class="btn btn-operator" onclick="appendOperator('*')">×</button>
             <button class="btn btn-operator" onclick="appendOperator('-')">−</button>
 
-            <button class="btn" onclick="appendNumber('7')">7</button>
-            <button class="btn" onclick="appendNumber('8')">8</button>
-            <button class="btn" onclick="appendNumber('9')">9</button>
+            <button class="btn btn-number" onclick="appendNumber('7')">7</button>
+            <button class="btn btn-number" onclick="appendNumber('8')">8</button>
+            <button class="btn btn-number" onclick="appendNumber('9')">9</button>
             <button class="btn btn-operator" onclick="appendOperator('+')">+</button>
 
-            <button class="btn" onclick="appendNumber('4')">4</button>
-            <button class="btn" onclick="appendNumber('5')">5</button>
-            <button class="btn" onclick="appendNumber('6')">6</button>
-            <button class="btn" onclick="appendNumber('1')">1</button>
+            <button class="btn btn-number" onclick="appendNumber('4')">4</button>
+            <button class="btn btn-number" onclick="appendNumber('5')">5</button>
+            <button class="btn btn-number" onclick="appendNumber('6')">6</button>
+            <button class="btn btn-number" onclick="appendNumber('1')">1</button>
 
-            <button class="btn" onclick="appendNumber('2')">2</button>
-            <button class="btn" onclick="appendNumber('3')">3</button>
-            <button class="btn" onclick="appendNumber('0')">0</button>
-            <button class="btn" onclick="appendDecimal()">.</button>
+            <button class="btn btn-number" onclick="appendNumber('2')">2</button>
+            <button class="btn btn-number" onclick="appendNumber('3')">3</button>
+            <button class="btn btn-number" onclick="appendNumber('0')">0</button>
+            <button class="btn btn-number" onclick="appendDecimal()">.</button>
 
             <button class="btn btn-equals" onclick="calculate()">=</button>
           </div>
@@ -252,18 +355,49 @@
     </div>
 
     <footer>
-      <p>© 2025 Asem Ali Deeb Abuzaid. All rights reserved.</p>
+      <p>© 2025 Asem Ali Deeb Abuzaid. All Rights Reserved.</p>
     </footer>
   </div>
 
   <script>
+    // Create animated background particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random properties
+        const size = Math.random() * 20 + 5;
+        const posX = Math.random() * 100;
+        const duration = Math.random() * 20 + 15;
+        const delay = Math.random() * 5;
+        const direction = Math.random() > 0.5 ? 1 : -1;
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}vw`;
+        particle.style.bottom = `-20px`;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.setProperty('--direction', direction);
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Calculator logic
     let displayValue = '0';
     let firstOperand = null;
     let operator = null;
     let waitingForSecondOperand = false;
 
     function updateDisplay() {
-      document.getElementById('display').textContent = displayValue;
+      document.getElementById('display').textContent = displayValue.length > 12 
+        ? displayValue.slice(0, 12) + '...' 
+        : displayValue;
     }
 
     function appendNumber(num) {
@@ -314,13 +448,14 @@
 
     function performCalculation() {
       const secondOperand = parseFloat(displayValue);
-      let result;
+      if (isNaN(secondOperand)) return firstOperand || 0;
 
+      let result;
       switch (operator) {
         case '+': result = firstOperand + secondOperand; break;
         case '-': result = firstOperand - secondOperand; break;
         case '*': result = firstOperand * secondOperand; break;
-        case '/': result = secondOperand !== 0 ? firstOperand / secondOperand : 0; break;
+        case '/': result = secondOperand !== 0 ? firstOperand / secondOperand : 'Error';
         default: return secondOperand;
       }
 
@@ -332,14 +467,21 @@
 
       const result = performCalculation();
       displayValue = String(result);
+      if (displayValue === 'Error') {
+        setTimeout(clearDisplay, 1500);
+      }
       firstOperand = null;
       operator = null;
       waitingForSecondOperand = false;
       updateDisplay();
     }
 
-    // تهيئة العرض عند التحميل
-    updateDisplay();
+    // Initialize
+    window.onload = () => {
+      createParticles();
+      updateDisplay();
+    };
   </script>
 </body>
 </html>
+
