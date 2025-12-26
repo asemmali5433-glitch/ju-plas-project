@@ -5,98 +5,255 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Asem Ali Deeb Abuzaid</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #0f172a, #581c87);
-      color: white;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #581c87);
+      color: white;
+      min-height: 100vh;
       padding: 20px;
     }
     .container {
       max-width: 1200px;
       margin: 0 auto;
     }
+    header {
+      text-align: center;
+      padding: 40px 0;
+    }
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       background: linear-gradient(to right, #22d3ee, #c084fc);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-align: center;
+      margin-bottom: 10px;
     }
-    .calculator {
-      background: rgba(255,255,255,0.1);
-      border-radius: 20px;
-      padding: 20px;
-      max-width: 300px;
-      margin: 20px auto;
+    .subtitle {
+      font-size: 1.2rem;
+      color: #cbd5e1;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin: 30px 0;
+    }
+
+    .info-card, .calc-card {
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 25px;
+      flex: 1;
+      min-width: 300px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
-    .display {
-      background: #000;
+
+    .card-title {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #e2e8f0;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 12px 0;
+      color: #cbd5e1;
+    }
+
+    .contact-icon {
+      width: 24px;
+      text-align: center;
+      color: #22d3ee;
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .skill {
+      background: rgba(34, 211, 238, 0.15);
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      color: #22d3ee;
+      font-weight: bold;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
       color: white;
-      padding: 15px;
-      font-size: 24px;
+      font-weight: bold;
+    }
+
+    /* --- آلة الحاسبة --- */
+    .calculator {
+      background: #000;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 10px;
+    }
+
+    .display {
+      background: #1e293b;
+      color: white;
+      font-size: 2.2rem;
       text-align: right;
+      padding: 20px;
       border-radius: 10px;
       margin-bottom: 15px;
+      font-family: monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+
     .buttons {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      gap: 12px;
     }
-    button {
-      padding: 15px;
-      font-size: 18px;
+
+    .btn {
+      padding: 18px 0;
+      font-size: 1.3rem;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
       background: #334155;
       color: white;
+      font-weight: bold;
+      transition: all 0.2s;
     }
-    .operator { background: #f59e0b; }
-    .equals { background: #10b981; grid-row: span 2; }
-    .clear { background: #ef4444; grid-column: span 2; }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+
+    .btn-operator {
+      background: #f59e0b;
+    }
+
+    .btn-equals {
+      background: #10b981;
+      grid-row: span 2;
+    }
+
+    .btn-clear {
+      background: #ef4444;
+      grid-column: span 2;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 0 10px;
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Asem Ali Deeb Abuzaid</h1>
-    <p style="text-align: center; color: #cbd5e1;">Full Stack Developer & Creative Technologist</p>
+    <header>
+      <h1>Asem Ali Deeb Abuzaid</h1>
+      <p class="subtitle">Full Stack Developer & Creative Technologist</p>
+    </header>
 
-    <!-- آلة حاسبة بسيطة -->
-    <div class="calculator">
-      <div class="display" id="display">0</div>
-      <div class="buttons">
-        <button class="clear" onclick="clearDisplay()">Clear</button>
-        <button class="operator" onclick="appendOperator('/')">/</button>
-        <button class="operator" onclick="appendOperator('*')">×</button>
-        <button class="operator" onclick="appendOperator('-')">−</button>
+    <div class="content">
+      <!-- بطاقة المعلومات -->
+      <div class="info-card">
+        <h2 class="card-title">معلومات عني</h2>
+        <div class="contact-item">
+          <span class="contact-icon">📧</span>
+          <span>asemaliabuzaid@gmail.com</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📱</span>
+          <span>+96277 9 35 25 15</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📍</span>
+          <span>Jordan, Amman</span>
+        </div>
 
-        <button onclick="appendNumber('7')">7</button>
-        <button onclick="appendNumber('8')">8</button>
-        <button onclick="appendNumber('9')">9</button>
-        <button class="operator" onclick="appendOperator('+')">+</button>
+        <h3 class="card-title" style="margin-top: 25px;">المهارات</h3>
+        <div class="skills">
+          <div class="skill">Web Development</div>
+          <div class="skill">UI/UX Design</div>
+          <div class="skill">Problem Solving</div>
+          <div class="skill">Team Leadership</div>
+        </div>
 
-        <button onclick="appendNumber('4')">4</button>
-        <button onclick="appendNumber('5')">5</button>
-        <button onclick="appendNumber('6')">6</button>
-        <button onclick="appendNumber('1')">1</button>
+        <h3 class="card-title" style="margin-top: 25px;">روابط التواصل</h3>
+        <div class="social-links">
+          <a href="https://github.com" class="social-link" target="_blank">G</a>
+          <a href="https://www.linkedin.com/in/asem-abu-zaid-02a82b360/" class="social-link" target="_blank">L</a>
+          <a href="https://web.facebook.com/assemshab/" class="social-link" target="_blank">F</a>
+        </div>
+      </div>
 
-        <button onclick="appendNumber('2')">2</button>
-        <button onclick="appendNumber('3')">3</button>
-        <button onclick="appendNumber('0')">0</button>
-        <button onclick="appendDecimal()">.</button>
+      <!-- آلة الحاسبة -->
+      <div class="calc-card">
+        <h2 class="card-title">آلة حاسبة احترافية</h2>
+        <div class="calculator">
+          <div class="display" id="display">0</div>
+          <div class="buttons">
+            <button class="btn btn-clear" onclick="clearDisplay()">Clear</button>
+            <button class="btn btn-operator" onclick="appendOperator('/')">/</button>
+            <button class="btn btn-operator" onclick="appendOperator('*')">×</button>
+            <button class="btn btn-operator" onclick="appendOperator('-')">−</button>
 
-        <button class="equals" onclick="calculate()">=</button>
+            <button class="btn" onclick="appendNumber('7')">7</button>
+            <button class="btn" onclick="appendNumber('8')">8</button>
+            <button class="btn" onclick="appendNumber('9')">9</button>
+            <button class="btn btn-operator" onclick="appendOperator('+')">+</button>
+
+            <button class="btn" onclick="appendNumber('4')">4</button>
+            <button class="btn" onclick="appendNumber('5')">5</button>
+            <button class="btn" onclick="appendNumber('6')">6</button>
+            <button class="btn" onclick="appendNumber('1')">1</button>
+
+            <button class="btn" onclick="appendNumber('2')">2</button>
+            <button class="btn" onclick="appendNumber('3')">3</button>
+            <button class="btn" onclick="appendNumber('0')">0</button>
+            <button class="btn" onclick="appendDecimal()">.</button>
+
+            <button class="btn btn-equals" onclick="calculate()">=</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <p style="text-align: center; margin-top: 30px; color: #94a3b8;">
-      © 2025 Asem Ali Deeb Abuzaid. All rights reserved.
-    </p>
+    <footer>
+      <p>© 2025 Asem Ali Deeb Abuzaid. All rights reserved.</p>
+    </footer>
   </div>
 
   <script>
@@ -181,6 +338,7 @@
       updateDisplay();
     }
 
+    // تهيئة العرض عند التحميل
     updateDisplay();
   </script>
 </body>
