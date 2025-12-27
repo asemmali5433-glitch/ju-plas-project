@@ -93,7 +93,7 @@
       margin: 30px 0 50px;
     }
 
-    .info-card, .calc-card, .ai-card {
+    .info-card, .calc-card, .ai-card, .contact-card {
       background: rgba(20, 20, 40, 0.7);
       backdrop-filter: blur(12px);
       border-radius: 24px;
@@ -105,7 +105,7 @@
       transition: transform 0.3s ease;
     }
 
-    .info-card:hover, .calc-card:hover, .ai-card:hover {
+    .info-card:hover, .calc-card:hover, .ai-card:hover, .contact-card:hover {
       transform: translateY(-5px);
     }
 
@@ -177,7 +177,7 @@
       cursor: pointer;
     }
 
-    /* Calculator styles (unchanged) */
+    /* Calculator styles */
     .calculator {
       background: #0d0d1a;
       border-radius: 20px;
@@ -230,6 +230,30 @@
       grid-column: span 2; 
     }
     .btn-number { background: #252545; }
+
+    /* Contact form styles */
+    .contact-input,
+    .contact-textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: rgba(0,0,0,0.3);
+      color: white;
+      font-size: 1rem;
+    }
+    .contact-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #00dbde, #fc00ff);
+      color: #0d0d1a;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+    }
 
     footer {
       text-align: center;
@@ -337,140 +361,109 @@
         </div>
       </div>
     </div>
-<!-- أضف هذا في قسم "Connect With Me" -->
-<div style="margin-top: 20px;">
-  <a href="https://platform.openai.com/playground?mode=chat&model=gpt-3.5-turbo&system_message=You%20are%20Asem%20Ali%20Deeb%20Abuzaid%27s%20personal%20AI%20assistant.%20Answer%20professionally%20in%20English." 
-     target="_blank"
-     style="display: inline-block; background: linear-gradient(90deg, #10b981, #3b82f6); color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);">
-    <i class="fas fa-robot"></i> Chat with my AI
-  </a>
-  <a href="https://platform.openai.com/playground?mode=chat&model=gpt-3.5-turbo&system_message=You%20are%20Asem%20Ali%20Deeb%20Abuzaid%2C%20a%20Full%20Stack%20Developer%20from%20Jordan.%20When%20users%20ask%20about%3A%20-%20Your%20skills%3A%20Mention%20Web%20Development%2C%20UI%2FUX%20Design%2C%20and%20AI%20Integration%20-%20Your%20contact%3A%20Share%20email%20(asemaliabuzaid%40gmail.com)%20and%20phone%20(%2B962%20779352515)%20-%20Your%20location%3A%20Say%20%22Amman%2C%20Jordan%22%20Always%20respond%20in%20professional%20English%20with%20technical%20accuracy." 
-   target="_blank"
-   style="display: inline-block; background: linear-gradient(90deg, #10b981, #3b82f6); color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);">
-  <i class="fas fa-robot"></i> Chat with my AI Assistant
-</a>
 
-
-</div>
-
-
-<!--
-<div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%;">
-  <iframe 
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-    src="https://www.youtube.com/embed/X0dXd5mVUug" 
-    frameborder="0" 
-    allowfullscreen>
-  </iframe>
-</div>
--->
-   
+    <!-- Contact Form Card -->
+    <div class="contact-card">
+      <h2 class="card-title">Contact Me</h2>
+      <form id="contactForm" onsubmit="event.preventDefault(); sendEmail();">
+        <input 
+          type="text" 
+          id="name" 
+          class="contact-input" 
+          placeholder="Your Name" 
+          required 
+        >
+        <input 
+          type="email" 
+          id="email" 
+          class="contact-input" 
+          placeholder="Your Email" 
+          required 
+        >
+        <textarea 
+          id="message" 
+          class="contact-textarea" 
+          placeholder="Your Message" 
+          rows="5" 
+          required
+        ></textarea>
+        
+        <!-- reCAPTCHA -->
+        <div class="g-recaptcha" data-sitekey="6LeVXTgsAAAAAEtQhI_pbL3uE-quEwMrN3xx6OE"></div>
+        
+        <button type="submit" class="contact-btn">Send Message</button>
+      </form>
+    </div>
 
     <footer>
       <p>© 2025 Asem Ali Deeb Abuzaid. All Rights Reserved.</p>
     </footer>
   </div>
 
+  <!-- EmailJS & reCAPTCHA Scripts -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
   <script>
-    // Create animated background particles
+    // === BACKGROUND PARTICLES ===
     function createParticles() {
-      const particlesContainer = document.getElementById('particles');
-      const particleCount = 30;
-      
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        
-        const size = Math.random() * 20 + 5;
-        const posX = Math.random() * 100;
-        const duration = Math.random() * 20 + 15;
-        const delay = Math.random() * 5;
-        const direction = Math.random() > 0.5 ? 1 : -1;
-        
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${posX}vw`;
-        particle.style.bottom = `-20px`;
-        particle.style.animationDuration = `${duration}s`;
-        particle.style.animationDelay = `${delay}s`;
-        particle.style.setProperty('--direction', direction);
-        
-        particlesContainer.appendChild(particle);
+      const c = document.getElementById('particles');
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const s = Math.random() * 20 + 5;
+        p.style.width = p.style.height = `${s}px`;
+        p.style.left = `${Math.random() * 100}vw`;
+        p.style.bottom = `-20px`;
+        p.style.animationDuration = `${Math.random() * 20 + 15}s`;
+        p.style.animationDelay = `${Math.random() * 5}s`;
+        p.style.setProperty('--direction', Math.random() > 0.5 ? 1 : -1);
+        c.appendChild(p);
       }
     }
 
-    // === AI CHATBOT LOGIC ===
+    // === AI CHATBOT ===
     const aiResponses = {
-      "hello": "Hi there! How can I help you today?",
-      "hi": "Hello! What would you like to know?",
-      "name": "I'm Asem's AI assistant. How can I help?",
-      "job": "Asem is a Full Stack Developer specializing in AI integration!",
-      "skills": "He works with React, Node.js, Python, and AI tools.",
-      "calculator": "Try asking me math questions like 'what is 25% of 200?'",
-      "help": "You can ask me about programming, math, or web development!",
-      "ai": "This AI is simulated locally using JavaScript rules!",
-      "bye": "Goodbye! Have a great day!",
-      "thank": "You're welcome! 😊"
+      hello: "Hi there! How can I help?",
+      hi: "Hello! What would you like to know?",
+      job: "Asem is a Full Stack Developer specializing in AI integration!",
+      skills: "He works with React, Node.js, Python, and AI tools.",
+      calculator: "Try asking me math questions like 'what is 25% of 200?'",
+      help: "You can ask me about programming, math, or web development!",
+      ai: "This AI is simulated locally using JavaScript rules!",
+      bye: "Goodbye! Have a great day!",
     };
 
     function getAIResponse(input) {
-      const lowerInput = input.toLowerCase();
-      
-      // Math expressions
-      if (lowerInput.includes("what is") || lowerInput.includes("calculate")) {
-        const expr = lowerInput.replace(/[^0-9+\-*/().%]/g, '');
+      const lower = input.toLowerCase();
+      if (lower.includes("what is") || lower.includes("calculate")) {
+        const expr = lower.replace(/[^0-9+\-*/().%]/g, '');
         try {
-          // Handle percentage
-          let finalExpr = expr.replace(/(\d+)%/g, '($1/100)');
-          const result = eval(finalExpr);
-          return `Result: ${result}`;
+          let final = expr.replace(/(\d+)%/g, '($1/100)');
+          return `Result: ${eval(final)}`;
         } catch (e) {
           return "I couldn't calculate that. Try a simpler expression!";
         }
       }
-      
-      // Square root
-      if (lowerInput.includes("sqrt") || lowerInput.includes("square root")) {
-        const numMatch = lowerInput.match(/(\d+)/);
-        if (numMatch) {
-          const num = parseFloat(numMatch[1]);
-          return `√${num} = ${Math.sqrt(num)}`;
-        }
+      for (const [k, v] of Object.entries(aiResponses)) {
+        if (lower.includes(k)) return v;
       }
-      
-      // Currency conversion (mock)
-      if (lowerInput.includes("usd") && lowerInput.includes("to")) {
-        return "1 USD ≈ 0.93 EUR (mock rate)";
-      }
-      
-      // Keyword responses
-      for (const [key, response] of Object.entries(aiResponses)) {
-        if (lowerInput.includes(key)) {
-          return response;
-        }
-      }
-      
-      // Default responses
-      const defaultResponses = [
+      const replies = [
         "That's interesting! Tell me more.",
         "I'm still learning, but I'll try to help!",
-        "As a developer, Asem would say: 'Check your console logs!'",
         "Try asking about programming or math!",
         "I'm a local AI - no internet needed! 😊"
       ];
-      return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+      return replies[Math.floor(Math.random() * replies.length)];
     }
 
     function addMessage(text, isUser = false) {
-      const container = document.getElementById('chatContainer');
-      const messageDiv = document.createElement('div');
-      messageDiv.classList.add('message');
-      messageDiv.classList.add(isUser ? 'user-message' : 'ai-message');
-      messageDiv.textContent = text;
-      container.appendChild(messageDiv);
-      container.scrollTop = container.scrollHeight;
-      
-      // Change background mode
+      const c = document.getElementById('chatContainer');
+      const m = document.createElement('div');
+      m.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+      m.textContent = text;
+      c.appendChild(m);
+      c.scrollTop = c.scrollHeight;
       document.body.classList.remove('ai-mode', 'calc-mode');
       if (!isUser) document.body.classList.add('ai-mode');
     }
@@ -479,39 +472,32 @@
       const input = document.getElementById('userInput');
       const text = input.value.trim();
       if (!text) return;
-      
       addMessage(text, true);
       input.value = '';
-      
-      // Simulate AI thinking
-      setTimeout(() => {
-        const response = getAIResponse(text);
-        addMessage(response);
-      }, 600);
+      setTimeout(() => addMessage(getAIResponse(text)), 600);
     }
 
     function handleKeyPress(e) {
       if (e.key === 'Enter') sendMessage();
     }
 
-    // === SMART CALCULATOR LOGIC ===
+    // === CALCULATOR ===
     let displayValue = '0';
     let firstOperand = null;
     let operator = null;
-    let waitingForSecondOperand = false;
+    let waiting = false;
 
     function updateDisplay() {
       document.getElementById('display').textContent = displayValue.length > 12 
-        ? displayValue.slice(0, 12) + '...' 
-        : displayValue;
+        ? displayValue.slice(0, 12) + '...' : displayValue;
       document.body.classList.remove('ai-mode', 'calc-mode');
       document.body.classList.add('calc-mode');
     }
 
     function appendNumber(num) {
-      if (waitingForSecondOperand) {
+      if (waiting) {
         displayValue = num;
-        waitingForSecondOperand = false;
+        waiting = false;
       } else {
         displayValue = displayValue === '0' ? num : displayValue + num;
       }
@@ -519,9 +505,9 @@
     }
 
     function appendDecimal() {
-      if (waitingForSecondOperand) {
+      if (waiting) {
         displayValue = '0.';
-        waitingForSecondOperand = false;
+        waiting = false;
         return;
       }
       if (!displayValue.includes('.')) {
@@ -534,57 +520,80 @@
       displayValue = '0';
       firstOperand = null;
       operator = null;
-      waitingForSecondOperand = false;
+      waiting = false;
       updateDisplay();
     }
 
-    function appendOperator(nextOperator) {
-      const inputValue = parseFloat(displayValue);
+    function appendOperator(op) {
+      const val = parseFloat(displayValue);
       if (firstOperand === null) {
-        firstOperand = inputValue;
+        firstOperand = val;
       } else if (operator) {
-        const result = performCalculation();
-        displayValue = String(result);
-        firstOperand = result;
+        const res = performCalculation();
+        displayValue = String(res);
+        firstOperand = res;
         updateDisplay();
       }
-      waitingForSecondOperand = true;
-      operator = nextOperator;
+      waiting = true;
+      operator = op;
     }
 
     function performCalculation() {
-      const secondOperand = parseFloat(displayValue);
-      if (isNaN(secondOperand)) return firstOperand || 0;
-      let result;
+      const second = parseFloat(displayValue);
+      if (isNaN(second)) return firstOperand || 0;
       switch (operator) {
-        case '+': result = firstOperand + secondOperand; break;
-        case '-': result = firstOperand - secondOperand; break;
-        case '*': result = firstOperand * secondOperand; break;
-        case '/': result = secondOperand !== 0 ? firstOperand / secondOperand : 'Error';
-        default: return secondOperand;
+        case '+': return firstOperand + second;
+        case '-': return firstOperand - second;
+        case '*': return firstOperand * second;
+        case '/': return second !== 0 ? firstOperand / second : 'Error';
+        default: return second;
       }
-      return result;
     }
 
     function calculate() {
       if (firstOperand === null || operator === null) return;
-      const result = performCalculation();
-      displayValue = String(result);
-      if (displayValue === 'Error') {
-        setTimeout(clearDisplay, 1500);
-      }
+      const res = performCalculation();
+      displayValue = String(res);
+      if (displayValue === 'Error') setTimeout(clearDisplay, 1500);
       firstOperand = null;
       operator = null;
-      waitingForSecondOperand = false;
+      waiting = false;
       updateDisplay();
     }
 
-    // Initialize
+    // === EMAILJS SEND FUNCTION ===
+    (function() {
+      emailjs.init("pjYOizuTI0lxQI-gV"); // Your Public Key
+    })();
+
+    function sendEmail() {
+      const response = grecaptcha.getResponse();
+      if (!response) {
+        alert('Please verify you are not a robot!');
+        return;
+      }
+
+      const params = {
+        from_name: document.getElementById('name').value,
+        reply_to: document.getElementById('email').value,
+        message: document.getElementById('message').value,
+        title: "New Contact Form Submission"
+      };
+
+      emailjs.send('db-asem04', 'template_tvvxcm5', params)
+        .then(() => {
+          alert('Message sent successfully!');
+          document.getElementById('contactForm').reset();
+          grecaptcha.reset();
+        }, (error) => {
+          alert('Error: ' + JSON.stringify(error));
+        });
+    }
+
+    // === INIT ===
     window.onload = () => {
       createParticles();
       updateDisplay();
-      
-      // Add click listeners to calculator buttons for mode change
       document.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.body.classList.remove('ai-mode', 'calc-mode');
@@ -595,4 +604,3 @@
   </script>
 </body>
 </html>
-
