@@ -1,482 +1,620 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطبخ الأصالة - قائمة الطعام</title>
-    
-    <!-- Fonts -->
-    <link href="https://cdn.jsdelivr.net/gh/fontsource/fontsource@4.5.0/fonts/arabic/tajawal/400.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/gh/fontsource/fontsource@4.5.0/fonts/arabic/tajawal/700.css" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Asem Abuzaid - AI Developer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .video-container {
+      max-width: 800px;
+      margin: 30px auto;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    video {
+      width: 100%;
+      display: block;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #0f0f1b, #1a1a2e);
+      transition: background 0.8s ease;
+    }
+    body.ai-mode {
+      background: linear-gradient(135deg, #1a0f2b, #2a1a3d);
+    }
+    body.calc-mode {
+      background: linear-gradient(135deg, #0f1a1a, #1a2a2a);
+    }
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Tajawal', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: '#d97706', // Amber-600
-                        secondary: '#78350f', // Amber-900
-                        light: '#fffbeb', // Amber-50
-                        dark: '#1c1917',
-                    }
-                }
-            }
-        }
-    </script>
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(173, 216, 230, 0.5);
+      animation: float 15s infinite ease-in-out;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 0.7; }
+      100% { transform: translateY(-100vh) translateX(30vw * (var(--direction) - 0.5)); opacity: 0; }
+    }
 
-    <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: #f8fafc;
-        }
-        .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://image.qwenlm.ai/public_source/24a6f46f-46cf-4b0e-80e9-557adc8846eb/1460cee19-6837-4172-b775-8be5a510bb3b.png');
-            background-size: cover;
-            background-position: center;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #d97706; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #b45309; 
-        }
-    </style>
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    header {
+      text-align: center;
+      padding: 50px 0 30px;
+    }
+    h1 {
+      font-size: 3.2rem;
+      background: linear-gradient(90deg, #00dbde, #fc00ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+    .subtitle {
+      font-size: 1.3rem;
+      color: #a0aec0;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin: 30px 0 50px;
+    }
+
+    .info-card, .calc-card, .ai-card, .contact-card {
+      background: rgba(20, 20, 40, 0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 32px;
+      flex: 1;
+      min-width: 320px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .info-card:hover, .calc-card:hover, .ai-card:hover, .contact-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-title {
+      font-size: 1.8rem;
+      margin-bottom: 24px;
+      background: linear-gradient(90deg, #00dbde, #fc00ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+
+    /* Chat styles */
+    .chat-container {
+      height: 300px;
+      overflow-y: auto;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 16px;
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+    .message {
+      padding: 10px 15px;
+      margin: 8px 0;
+      border-radius: 18px;
+      max-width: 80%;
+      word-wrap: break-word;
+      font-size: 1rem;
+    }
+    .user-message {
+      background: linear-gradient(90deg, #00dbde, #00c9ff);
+      color: #0d0d1a;
+      margin-left: auto;
+      border-bottom-right-radius: 5px;
+    }
+    .ai-message {
+      background: rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+      margin-right: auto;
+      border-bottom-left-radius: 5px;
+    }
+    .chat-input {
+      display: flex;
+      gap: 10px;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.3);
+      color: white;
+      font-size: 1rem;
+    }
+    .chat-input input:focus {
+      outline: none;
+      border-color: #00dbde;
+    }
+    .chat-input button {
+      padding: 12px 20px;
+      background: linear-gradient(90deg, #00dbde, #fc00ff);
+      color: #0d0d1a;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Calculator styles */
+    .calculator {
+      background: #0d0d1a;
+      border-radius: 20px;
+      padding: 24px;
+      margin-top: 12px;
+      box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6), 0 4px 20px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(100, 100, 255, 0.15);
+    }
+    .display {
+      background: #111122;
+      color: #00ffea;
+      font-size: 2.2rem;
+      text-align: right;
+      padding: 22px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      border: 1px solid #222244;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .btn {
+      padding: 20px 0;
+      font-size: 1.4rem;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      background: #1e1e3a;
+      color: white;
+      font-weight: bold;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    .btn:hover { background: #2a2a4a; transform: scale(1.04); }
+    .btn:active { transform: scale(0.98); }
+    .btn-operator { background: linear-gradient(135deg, #ff6b6b, #ff8e53); }
+    .btn-equals { 
+      background: linear-gradient(135deg, #00c9ff, #92fe9d); 
+      color: #0d0d1a; 
+      grid-row: span 2; 
+    }
+    .btn-clear { 
+      background: linear-gradient(135deg, #ff416c, #ff4b2b); 
+      grid-column: span 2; 
+    }
+    .btn-number { background: #252545; }
+
+    /* Contact form styles */
+    .contact-input,
+    .contact-textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: rgba(0,0,0,0.3);
+      color: white;
+      font-size: 1rem;
+    }
+    .contact-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #00dbde, #fc00ff);
+      color: #0d0d1a;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px 0 10px;
+      color: #64748b;
+      font-size: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+  </style>
 </head>
-<body class="text-gray-800 antialiased">
-
-    <!-- Navbar -->
-    <nav class="bg-white shadow-md fixed w-full z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-utensils text-primary text-2xl"></i>
-                <h1 class="text-2xl font-bold text-secondary">مطبخ الأصالة</h1>
-            </div>
-            <div class="hidden md:flex gap-6 font-medium">
-                <a href="#menu" class="hover:text-primary transition">القائمة</a>
-                <a href="#packages" class="hover:text-primary transition">البكجات والعروض</a>
-                <a href="#contact" class="hover:text-primary transition">تواصل معنا</a>
-            </div>
-            <button onclick="toggleCart()" class="relative p-2 text-secondary hover:text-primary transition">
-                <i class="fa-solid fa-cart-shopping text-xl"></i>
-                <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="hero-bg h-[60vh] flex items-center justify-center text-center text-white relative">
-        <div class="container mx-auto px-4 fade-in">
-            <h2 class="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">طعم البيت الأصيل</h2>
-            <p class="text-xl md:text-2xl mb-8 opacity-90">أشهى المأكولات العربية المحضرة بعناية فائقة</p>
-            <a href="#menu" class="bg-primary hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 shadow-lg transform hover:scale-105 inline-block">
-                تصفح القائمة
-            </a>
-        </div>
+<body>
+  <div class="particles" id="particles"></div>
+  
+  <div class="container">
+    <header>
+      <h1>Asem Abuzaid</h1>
+      <p class="subtitle">Full Stack Developer</p>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-12">
-        
-        <!-- Controls & Filters -->
-        <section id="menu-controls" class="mb-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <!-- Categories -->
-                <div class="flex flex-wrap gap-2 justify-center">
-                    <button onclick="filterCategory('all')" class="filter-btn active bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold transition">الكل</button>
-                    <button onclick="filterCategory('main')" class="filter-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-bold transition">أطباق رئيسية</button>
-                    <button onclick="filterCategory('grill')" class="filter-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-bold transition">مشاوي</button>
-                    <button onclick="filterCategory('sides')" class="filter-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-bold transition">مقبلات</button>
-                    <button onclick="filterCategory('drinks')" class="filter-btn bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-bold transition">مشروبات</button>
-                </div>
-
-                <!-- Sorting -->
-                <div class="flex items-center gap-2 bg-gray-50 p-1 rounded-lg">
-                    <span class="text-sm text-gray-500 px-2">ترتيب حسب:</span>
-                    <select id="sort-select" onchange="sortMenu()" class="bg-transparent border-none text-sm font-bold text-secondary focus:ring-0 cursor-pointer outline-none">
-                        <option value="default">الأكثر طلباً</option>
-                        <option value="price-asc">السعر: من الأقل للأعلى</option>
-                        <option value="price-desc">السعر: من الأعلى للأقل</option>
-                        <option value="name">الاسم (أ-ي)</option>
-                    </select>
-                </div>
-            </div>
-        </section>
-
-        <!-- Menu Grid -->
-        <section id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-            <!-- Items will be injected here via JS -->
-        </section>
-
-        <!-- Packages Section -->
-        <section id="packages" class="py-12 bg-light rounded-3xl p-8 mb-20 border border-amber-100">
-            <div class="text-center mb-10">
-                <h3 class="text-3xl font-bold text-secondary mb-2">بكجات العائلة والمناسبات</h3>
-                <p class="text-gray-600">وفّر أكثر مع باقاتنا المميزة الجاهزة</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="packages-grid">
-                <!-- Packages injected via JS -->
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer id="contact" class="bg-dark text-white py-12">
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
-            <div>
-                <h4 class="text-xl font-bold text-primary mb-4">مطبخ الأصالة</h4>
-                <p class="text-gray-400 text-sm leading-relaxed">نقدم لكم أشهى الأطباق المنزلية بمكونات طازجة وجودة عالية. طلباتكم تصلكم ساخنة.</p>
-            </div>
-            <div>
-                <h4 class="text-xl font-bold text-primary mb-4">تواصل معنا</h4>
-                <ul class="text-gray-400 text-sm space-y-2">
-                    <li><i class="fa-solid fa-phone ml-2"></i> 050-123-4567</li>
-                    <li><i class="fa-solid fa-envelope ml-2"></i> order@al-asala.com</li>
-                    <li><i class="fa-solid fa-location-dot ml-2"></i> الرياض، حي النرجس</li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-xl font-bold text-primary mb-4">ساعات العمل</h4>
-                <p class="text-gray-400 text-sm">يومياً من 12:00 ظهراً حتى 12:00 منتصف الليل</p>
-            </div>
+    <div class="content">
+      <!-- Info Card -->
+      <div class="info-card">
+        <h2 class="card-title">About Me</h2>
+        <div class="contact-item" style="display:flex;align-items:center;gap:16px;margin:16px 0;color:#cbd5e1;">
+          <div style="width:36px;height:36px;background:rgba(0,219,222,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#00dbde;">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <span>asemaliabuzaid@gmail.com</span>
         </div>
-        <div class="text-center mt-10 pt-6 border-t border-gray-800 text-gray-500 text-xs">
-            &copy; 2023 مطبخ الأصالة. جميع الحقوق محفوظة.
+        <div class="contact-item" style="display:flex;align-items:center;gap:16px;margin:16px 0;color:#cbd5e1;">
+          <div style="width:36px;height:36px;background:rgba(0,219,222,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#00dbde;">
+            <i class="fas fa-phone"></i>
+          </div>
+          <span>+962 779352515</span>
         </div>
-    </footer>
+        <div class="contact-item" style="display:flex;align-items:center;gap:16px;margin:16px 0;color:#cbd5e1;">
+          <div style="width:36px;height:36px;background:rgba(0,219,222,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#00dbde;">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <span>Amman, Jordan</span>
+        </div>
 
-    <!-- Cart Sidebar (Hidden by default) -->
-    <div id="cart-sidebar" class="fixed inset-y-0 left-0 w-full md:w-96 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-50 flex flex-col">
-        <div class="p-4 bg-secondary text-white flex justify-between items-center shadow-md">
-            <h3 class="text-xl font-bold"><i class="fa-solid fa-basket-shopping ml-2"></i> سلة المشتريات</h3>
-            <button onclick="toggleCart()" class="hover:text-gray-300"><i class="fa-solid fa-xmark text-xl"></i></button>
+        <h3 class="card-title" style="margin-top:28px;font-size:1.5rem;">Technical Skills</h3>
+        <div class="skills" style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px;">
+          <div class="skill" style="background:rgba(0,219,222,0.12);padding:12px;border-radius:12px;text-align:center;color:#00dbde;font-weight:600;">Web Development</div>
+          <div class="skill" style="background:rgba(0,219,222,0.12);padding:12px;border-radius:12px;text-align:center;color:#00dbde;font-weight:600;">UI/UX Design</div>
+          <div class="skill" style="background:rgba(0,219,222,0.12);padding:12px;border-radius:12px;text-align:center;color:#00dbde;font-weight:600;">MySQL</div>
+          <div class="skill" style="background:rgba(0,219,222,0.12);padding:12px;border-radius:12px;text-align:center;color:#00dbde;font-weight:600;">OOP</div>
         </div>
-        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4">
-            <!-- Cart items go here -->
-            <div class="text-center text-gray-400 mt-10">السلة فارغة حالياً</div>
+
+        <h3 class="card-title" style="margin-top:28px;font-size:1.5rem;">Connect With Me</h3>
+        <div class="social-links" style="display:flex;gap:18px;margin-top:28px;">
+          <a href="https://github.com/asemmali5433-glitch" class="social-link" target="_blank" style="display:flex;align-items:center;justify-content:center;width:50px;height:50px;background:rgba(255,255,255,0.1);border-radius:50%;text-decoration:none;color:white;font-size:20px;border:1px solid rgba(255,255,255,0.15);">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/asem-abu-zaid-02a82b360/" class="social-link" target="_blank" style="display:flex;align-items:center;justify-content:center;width:50px;height:50px;background:rgba(255,255,255,0.1);border-radius:50%;text-decoration:none;color:white;font-size:20px;border:1px solid rgba(255,255,255,0.15);">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+         <a href="mailto:amabuzd@gmail.com" 
+   style="display:flex;
+          align-items:center;
+          justify-content:center;
+          width:50px;
+          height:50px;
+          background:#D44638;
+          border-radius:50%;
+          text-decoration:none;
+          color:white;
+          font-size:20px;
+          border:1px solid rgba(255,255,255,0.15);
+          transition:0.3s;">
+          <i class="fas fa-envelope"></i>
+   
+</a>
+
+          </a>
         </div>
-        <div class="p-4 bg-gray-50 border-t border-gray-200">
-            <div class="flex justify-between mb-4 text-lg font-bold text-secondary">
-                <span>المجموع:</span>
-                <span id="cart-total">0 ر.س</span>
-            </div>
-            <button onclick="alert('تم إرسال الطلب بنجاح! شكراً لتعاملكم معنا.')" class="w-full bg-primary hover:bg-amber-700 text-white font-bold py-3 rounded-lg transition shadow-lg">
-                إتمام الطلب (واتساب)
-            </button>
+      </div>
+
+      <!-- AI Chat Card -->
+      <div class="ai-card">
+        <h2 class="card-title">ذكاء اصطناعي من سوق الجمعة</h2>
+        <div class="chat-container" id="chatContainer">
+          <div class="message ai-message">Hello! I'm your AI assistant. Ask me about programming, math, or web development!</div>
         </div>
+        <div class="chat-input">
+          <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+          <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+<!--
+      ## Calculator Card
+      <div class="calc-card">
+        <h2 class="card-title">Smart Calculator</h2>
+        <div class="calculator">
+          <div class="display" id="display">0</div>
+          <div class="buttons">
+            <button class="btn btn-clear" onclick="clearDisplay()">Clear</button>
+            <button class="btn btn-operator" onclick="appendOperator('/')">÷</button>
+            <button class="btn btn-operator" onclick="appendOperator('*')">×</button>
+            <button class="btn btn-operator" onclick="appendOperator('-')">−</button>
+
+            <button class="btn btn-number" onclick="appendNumber('7')">7</button>
+            <button class="btn btn-number" onclick="appendNumber('8')">8</button>
+            <button class="btn btn-number" onclick="appendNumber('9')">9</button>
+            <button class="btn btn-operator" onclick="appendOperator('+')">+</button>
+
+            <button class="btn btn-number" onclick="appendNumber('4')">4</button>
+            <button class="btn btn-number" onclick="appendNumber('5')">5</button>
+            <button class="btn btn-number" onclick="appendNumber('6')">6</button>
+            <button class="btn btn-number" onclick="appendNumber('1')">1</button>
+
+            <button class="btn btn-number" onclick="appendNumber('2')">2</button>
+            <button class="btn btn-number" onclick="appendNumber('3')">3</button>
+            <button class="btn btn-number" onclick="appendNumber('0')">0</button>
+            <button class="btn btn-number" onclick="appendDecimal()">.</button>
+
+            <button class="btn btn-equals" onclick="calculate()">=</button>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <!-- Overlay -->
-    <div id="overlay" onclick="toggleCart()" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity"></div>
+-->
+    <!-- Contact Form Card -->
+    <div class="contact-card">
+      <h2 class="card-title">Contact Me</h2>
+      <form id="contactForm" onsubmit="event.preventDefault(); sendEmail();">
+        <input 
+          type="text" 
+          id="name" 
+          class="contact-input" 
+          placeholder="Your Name" 
+          required 
+        >
+        <input 
+          type="email" 
+          id="email" 
+          class="contact-input" 
+          placeholder="Your Email" 
+          required 
+        >
+        <textarea 
+          id="message" 
+          class="contact-textarea" 
+          placeholder="Your Message" 
+          rows="5" 
+          required
+        ></textarea>
+        
+        <!-- reCAPTCHA -->
+<div class="g-recaptcha" data-sitekey="6Lc3YzgsAAAAAEVsj8qH2WhoBJrQV76adJJ2bR3U"></div>        
+        <button type="submit" class="contact-btn">Send Message</button>
+      </form>
+    </div>
 
-    <script>
-        // --- Data ---
-        const menuItems = [
-            { id: 1, name: "مندي لحم", price: 45, category: "main", image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&q=80&w=600" },
-            { id: 2, name: "كبسة دجاج", price: 35, category: "main", image: "https://images.unsplash.com/photo-1604329760661-e71dc83f8f1a?auto=format&fit=crop&q=80&w=600" },
-            { id: 3, name: "مظبي سمك", price: 55, category: "main", image: "https://images.unsplash.com/photo-1544510802-5334d77f646d?auto=format&fit=crop&q=80&w=600" },
-            { id: 4, name: "مشاوي مشكلة", price: 65, category: "grill", image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&q=80&w=600" },
-            { id: 5, name: "شاورما عربي", price: 15, category: "grill", image: "https://images.unsplash.com/photo-1633321769407-af3c4765e38e?auto=format&fit=crop&q=80&w=600" },
-            { id: 6, name: "سلطة عربية", price: 12, category: "sides", image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&q=80&w=600" },
-            { id: 7, name: "حمص بالزيت", price: 18, category: "sides", image: "https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?auto=format&fit=crop&q=80&w=600" },
-            { id: 8, name: "ليموناضة نعناع", price: 10, category: "drinks", image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&q=80&w=600" },
-            { id: 9, name: "عصير برتقال", price: 14, category: "drinks", image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&q=80&w=600" },
-            { id: 10, name: "برياني دجاج", price: 40, category: "main", image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&q=80&w=600" },
-        ];
+    <footer>
+      <p>© جميع الحقوق محفوظة 2026 Asem Ali Deeb Abuzaid. All Rights Reserved.</p>
+    </footer>
+  </div>
 
-        const packages = [
-            { 
-                id: 101, 
-                name: "بكج العائلة الكبير", 
-                desc: "3 مندي لحم + 2 كبسة دجاج + مقبلات + 4 مشروبات",
-                price: 220,
-                originalPrice: 260,
-                savings: 40
-            },
-            { 
-                id: 102, 
-                name: "بكج الغداء السريع", 
-                desc: "4 شاورما عربي + بطاطس + 2 مشروبات",
-                price: 75,
-                originalPrice: 85,
-                savings: 10
-            }
-        ];
+  <!-- EmailJS & reCAPTCHA Scripts -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
-        let cart = [];
+  <script>
+    // === BACKGROUND PARTICLES ===
+    function createParticles() {
+      const c = document.getElementById('particles');
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        const s = Math.random() * 20 + 5;
+        p.style.width = p.style.height = `${s}px`;
+        p.style.left = `${Math.random() * 100}vw`;
+        p.style.bottom = `-20px`;
+        p.style.animationDuration = `${Math.random() * 20 + 15}s`;
+        p.style.animationDelay = `${Math.random() * 5}s`;
+        p.style.setProperty('--direction', Math.random() > 0.5 ? 1 : -1);
+        c.appendChild(p);
+      }
+    }
 
-        // --- Functions ---
+    // === AI CHATBOT ===
+    const aiResponses = {
+      hello: "Hi there! How can I help?",
+      hi: "Hello! What would you like to know?",
+      job: "Asem is a Full Stack Developer specializing in AI integration!",
+      skills: "He works with React, Node.js, Python, and AI tools.",
+      calculator: "Try asking me math questions like 'what is 25% of 200?'",
+      help: "You can ask me about programming, math, or web development!",
+      ai: "This AI is simulated locally using JavaScript rules!",
+      bye: "Goodbye! Have a great day!",
+    };
 
-        function renderMenu(items) {
-            const grid = document.getElementById('menu-grid');
-            grid.innerHTML = '';
-            
-            items.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover transition duration-300 flex flex-col h-full fade-in';
-                card.innerHTML = `
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover transform hover:scale-110 transition duration-500">
-                        <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-secondary shadow-sm">
-                            ${getCategoryName(item.category)}
-                        </div>
-                    </div>
-                    <div class="p-5 flex-1 flex flex-col">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-800">${item.name}</h3>
-                            <span class="text-primary font-bold text-lg">${item.price} ر.س</span>
-                        </div>
-                        <p class="text-gray-500 text-sm mb-4 flex-1">وجبة شهية محضرة بعناية فائقة من أجود المكونات الطازجة.</p>
-                        <button onclick="addToCart(${item.id}, 'item')" class="w-full bg-gray-50 hover:bg-primary hover:text-white text-secondary font-bold py-2 rounded-lg transition border border-gray-200 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-plus"></i> إضافة للسلة
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
+    function getAIResponse(input) {
+      const lower = input.toLowerCase();
+      if (lower.includes("what is") || lower.includes("calculate")) {
+        const expr = lower.replace(/[^0-9+\-*/().%]/g, '');
+        try {
+          let final = expr.replace(/(\d+)%/g, '($1/100)');
+          return `Result: ${eval(final)}`;
+        } catch (e) {
+          return "I couldn't calculate that. Try a simpler expression!";
         }
+      }
+      for (const [k, v] of Object.entries(aiResponses)) {
+        if (lower.includes(k)) return v;
+      }
+      const replies = [
+        "That's interesting! Tell me more.",
+        "I'm still learning, but I'll try to help!",
+        "Try asking about programming or math!",
+        "I'm a local AI - no internet needed! 😊"
+      ];
+      return replies[Math.floor(Math.random() * replies.length)];
+    }
 
-        function renderPackages() {
-            const grid = document.getElementById('packages-grid');
-            grid.innerHTML = '';
+    function addMessage(text, isUser = false) {
+      const c = document.getElementById('chatContainer');
+      const m = document.createElement('div');
+      m.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+      m.textContent = text;
+      c.appendChild(m);
+      c.scrollTop = c.scrollHeight;
+      document.body.classList.remove('ai-mode', 'calc-mode');
+      if (!isUser) document.body.classList.add('ai-mode');
+    }
 
-            packages.forEach(pkg => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl shadow-md border-2 border-primary/10 overflow-hidden relative hover:border-primary transition duration-300 fade-in';
-                card.innerHTML = `
-                    <div class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-br-lg z-10">
-                        وفر ${pkg.savings} ر.س
-                    </div>
-                    <div class="p-8 text-center">
-                        <div class="w-16 h-16 bg-amber-100 text-primary rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-                            <i class="fa-solid fa-box-open"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-secondary mb-2">${pkg.name}</h3>
-                        <p class="text-gray-500 text-sm mb-6 h-12">${pkg.desc}</p>
-                        
-                        <div class="flex justify-center items-center gap-3 mb-6">
-                            <span class="text-gray-400 line-through text-sm">${pkg.originalPrice} ر.س</span>
-                            <span class="text-3xl font-bold text-primary">${pkg.price} ر.س</span>
-                        </div>
-                        
-                        <button onclick="addToCart(${pkg.id}, 'package')" class="w-full bg-secondary hover:bg-amber-800 text-white font-bold py-3 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-cart-plus"></i> اطلب البكج
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
+      if (!text) return;
+      addMessage(text, true);
+      input.value = '';
+      setTimeout(() => addMessage(getAIResponse(text)), 600);
+    }
 
-        function getCategoryName(cat) {
-            const names = {
-                'main': 'أطباق رئيسية',
-                'grill': 'مشاوي',
-                'sides': 'مقبلات',
-                'drinks': 'مشروبات'
-            };
-            return names[cat] || cat;
-        }
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') sendMessage();
+    }
 
-        // --- Filtering & Sorting ---
+    // === CALCULATOR ===
+   /* let displayValue = '0';
+   let firstOperand = null;
+   let operator = null;
+   let waiting = false;
 
-        function filterCategory(category) {
-            // Update buttons style
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-primary', 'text-white');
-                btn.classList.add('bg-gray-100', 'text-gray-700');
-            });
-            event.target.classList.remove('bg-gray-100', 'text-gray-700');
-            event.target.classList.add('bg-primary', 'text-white');
+    function updateDisplay() {
+      document.getElementById('display').textContent = displayValue.length > 12 
+        ? displayValue.slice(0, 12) + '...' : displayValue;
+      document.body.classList.remove('ai-mode', 'calc-mode');
+      document.body.classList.add('calc-mode');
+    }
 
-            let filtered = category === 'all' 
-                ? [...menuItems] 
-                : menuItems.filter(item => item.category === category);
-            
-            // Apply current sort to filtered results
-            applySort(filtered);
-        }
+    function appendNumber(num) {
+      if (waiting) {
+        displayValue = num;
+        waiting = false;
+      } else {
+        displayValue = displayValue === '0' ? num : displayValue + num;
+      }
+      updateDisplay();
+    }
 
-        function sortMenu() {
-            const sortValue = document.getElementById('sort-select').value;
-            // Get currently displayed category
-            const activeBtn = document.querySelector('.filter-btn.bg-primary');
-            // Simple logic: if "All" is active, filter all, else filter specific
-            // For simplicity in this demo, we re-filter based on text content or assume 'all' if not specific
-            // Better approach: store current category state.
-            
-            // Let's just re-run the filter logic based on the active button text or default to all
-            // But to keep it clean, let's just grab the current list and sort it.
-            // Actually, let's just re-render based on the current view.
-            
-            // Hacky but effective for single file: check which button has active class
-            let currentCategory = 'all';
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach((btn, index) => {
-                if(btn.classList.contains('bg-primary')) {
-                    if(index === 1) currentCategory = 'main';
-                    if(index === 2) currentCategory = 'grill';
-                    if(index === 3) currentCategory = 'sides';
-                    if(index === 4) currentCategory = 'drinks';
-                }
-            });
+    function appendDecimal() {
+      if (waiting) {
+        displayValue = '0.';
+        waiting = false;
+        return;
+      }
+      if (!displayValue.includes('.')) {
+        displayValue += '.';
+      }
+      updateDisplay();
+    }
 
-            let items = currentCategory === 'all' ? [...menuItems] : menuItems.filter(i => i.category === currentCategory);
-            applySort(items);
-        }
+    function clearDisplay() {
+      displayValue = '0';
+      firstOperand = null;
+      operator = null;
+      waiting = false;
+      updateDisplay();
+    }
 
-        function applySort(items) {
-            const sortValue = document.getElementById('sort-select').value;
-            
-            if (sortValue === 'price-asc') {
-                items.sort((a, b) => a.price - b.price);
-            } else if (sortValue === 'price-desc') {
-                items.sort((a, b) => b.price - a.price);
-            } else if (sortValue === 'name') {
-                items.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
-            }
-            // 'default' keeps original order
-            
-            renderMenu(items);
-        }
+    function appendOperator(op) {
+      const val = parseFloat(displayValue);
+      if (firstOperand === null) {
+        firstOperand = val;
+      } else if (operator) {
+        const res = performCalculation();
+        displayValue = String(res);
+        firstOperand = res;
+        updateDisplay();
+      }
+      waiting = true;
+      operator = op;
+    }
 
-        // --- Cart Logic ---
+    function performCalculation() {
+      const second = parseFloat(displayValue);
+      if (isNaN(second)) return firstOperand || 0;
+      switch (operator) {
+        case '+': return firstOperand + second;
+        case '-': return firstOperand - second;
+        case '*': return firstOperand * second;
+        case '/': return second !== 0 ? firstOperand / second : 'Error';
+        default: return second;
+      }
+    }
 
-        function addToCart(id, type) {
-            let item;
-            if (type === 'item') {
-                item = menuItems.find(i => i.id === id);
-            } else {
-                item = packages.find(p => p.id === id);
-                item.type = 'package'; // Mark as package
-            }
+    function calculate() {
+      if (firstOperand === null || operator === null) return;
+      const res = performCalculation();
+      displayValue = String(res);
+      if (displayValue === 'Error') setTimeout(clearDisplay, 1500);
+      firstOperand = null;
+      operator = null;
+      waiting = false;
+      updateDisplay();
+    } */
 
-            const existing = cart.find(i => i.id === id);
-            if (existing) {
-                existing.qty++;
-            } else {
-                cart.push({ ...item, qty: 1 });
-            }
-            updateCartUI();
-            
-            // Visual feedback
-            const btn = event.target.closest('button');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> تم الإضافة';
-            btn.classList.add('bg-green-500', 'text-white', 'border-green-500');
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.classList.remove('bg-green-500', 'text-white', 'border-green-500');
-            }, 1000);
-        }
+    // === EMAILJS SEND FUNCTION ===
+    (function() {
+      emailjs.init("pjYOizuTI0lxQI-gV"); // Your Public Key
+    })();
 
-        function removeFromCart(id) {
-            cart = cart.filter(i => i.id !== id);
-            updateCartUI();
-        }
+    function sendEmail() {
+      const response = grecaptcha.getResponse();
+      if (!response) {
+        alert('Please verify you are not a robot!');
+        return;
+      }
 
-        function updateQty(id, change) {
-            const item = cart.find(i => i.id === id);
-            if (item) {
-                item.qty += change;
-                if (item.qty <= 0) removeFromCart(id);
-                else updateCartUI();
-            }
-        }
+      const params = {
+        from_name: document.getElementById('name').value,
+        reply_to: document.getElementById('email').value,
+        message: document.getElementById('message').value,
+        title: "New Contact Form Submission"
+      };
 
-        function updateCartUI() {
-            const cartContainer = document.getElementById('cart-items');
-            const countBadge = document.getElementById('cart-count');
-            const totalEl = document.getElementById('cart-total');
-            
-            cartContainer.innerHTML = '';
-            let total = 0;
-            let count = 0;
-
-            if (cart.length === 0) {
-                cartContainer.innerHTML = '<div class="text-center text-gray-400 mt-10 flex flex-col items-center"><i class="fa-solid fa-basket-shopping text-4xl mb-3 opacity-50"></i>السلة فارغة حالياً</div>';
-            } else {
-                cart.forEach(item => {
-                    total += item.price * item.qty;
-                    count += item.qty;
-                    
-                    const div = document.createElement('div');
-                    div.className = 'flex items-center gap-3 bg-gray-50 p-3 rounded-lg border border-gray-100';
-                    div.innerHTML = `
-                        <div class="w-12 h-12 bg-white rounded-md overflow-hidden flex-shrink-0">
-                            <img src="${item.image || 'https://via.placeholder.com/50?text=Pkg'}" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-bold text-sm text-gray-800">${item.name}</h4>
-                            <div class="text-xs text-primary font-bold">${item.price} ر.س</div>
-                        </div>
-                        <div class="flex items-center gap-2 bg-white rounded-md border border-gray-200 px-2 py-1">
-                            <button onclick="updateQty(${item.id}, -1)" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-minus text-xs"></i></button>
-                            <span class="text-sm font-bold w-4 text-center">${item.qty}</span>
-                            <button onclick="updateQty(${item.id}, 1)" class="text-gray-400 hover:text-green-500"><i class="fa-solid fa-plus text-xs"></i></button>
-                        </div>
-                    `;
-                    cartContainer.appendChild(div);
-                });
-            }
-
-            countBadge.innerText = count;
-            totalEl.innerText = total + ' ر.س';
-            
-            if(count > 0) {
-                countBadge.classList.remove('hidden');
-            }
-        }
-
-        function toggleCart() {
-            const sidebar = document.getElementById('cart-sidebar');
-            const overlay = document.getElementById('overlay');
-            
-            if (sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full');
-                overlay.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            }
-        }
-
-        // --- Initialization ---
-        window.addEventListener('DOMContentLoaded', () => {
-            renderMenu(menuItems);
-            renderPackages();
+      emailjs.send('db-asem04', 'template_tvvxcm5', params)
+        .then(() => {
+          alert('Message sent successfully!');
+          document.getElementById('contactForm').reset();
+          grecaptcha.reset();
+        }, (error) => {
+          alert('Error: ' + JSON.stringify(error));
         });
+    }
 
-    </script>
+    // === INIT ===
+    window.onload = () => {
+      createParticles();
+      updateDisplay();
+      document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.body.classList.remove('ai-mode', 'calc-mode');
+          document.body.classList.add('calc-mode');
+        });
+      });
+    };
+  </script>
 </body>
 </html>
-
